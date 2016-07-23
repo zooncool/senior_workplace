@@ -1,14 +1,13 @@
-package src.java.basic.practice.tomcat.httpServer;
+package src.basic.practice.tomcat.servlet;
 
-import java.io.File;
-import java.io.IOException;
+import java.net.Socket;
+import java.net.ServerSocket;
+import java.net.InetAddress;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.IOException;
 
-public class HttpServer {
+public class HttpServer1 {
 
   /** WEB_ROOT is the directory where our HTML and other files reside.
    *  For this package, WEB_ROOT is the "webroot" directory under the working
@@ -16,10 +15,6 @@ public class HttpServer {
    *  The working directory is the location in the file system
    *  from where the java command was invoked.
    */
-  public static final String WEB_ROOT =
-    "D:\\book\\java\\tomcat\\Tomcat\\HowTomcatWorks" + File.separator  + "webroot";
-//    System.getProperty("user.dir") + File.separator  + "webroot";
-
   // shutdown command
   private static final String SHUTDOWN_COMMAND = "/SHUTDOWN";
 
@@ -27,13 +22,13 @@ public class HttpServer {
   private boolean shutdown = false;
 
   public static void main(String[] args) {
-    HttpServer server = new HttpServer();
+    HttpServer1 server = new HttpServer1();
     server.await();
   }
 
   public void await() {
     ServerSocket serverSocket = null;
-    int port = 8081;
+    int port = 8080;
     try {
       serverSocket =  new ServerSocket(port, 1, InetAddress.getByName("127.0.0.1"));
     }
@@ -59,17 +54,26 @@ public class HttpServer {
         // create Response object
         Response response = new Response(output);
         response.setRequest(request);
-        response.sendStaticResource();
+
+        // check if this is a request for a servlet or a static resource
+        // a request for a servlet begins with "/servlet/"
+        if (request.getUri().startsWith("/servlet/")) {
+          ServletProcessor1 processor = new ServletProcessor1();
+          processor.process(request, response);
+        }
+        else {
+          StaticResourceProcessor processor = new StaticResourceProcessor();
+          processor.process(request, response);
+        }
 
         // Close the socket
         socket.close();
-
         //check if the previous URI is a shutdown command
         shutdown = request.getUri().equals(SHUTDOWN_COMMAND);
       }
       catch (Exception e) {
         e.printStackTrace();
-        continue;
+        System.exit(1);
       }
     }
   }

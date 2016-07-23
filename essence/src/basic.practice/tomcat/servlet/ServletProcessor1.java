@@ -1,4 +1,4 @@
-package src.java.basic.practice.tomcat.servlet;
+package src.basic.practice.tomcat.servlet;
 
 import java.net.URL;
 import java.net.URLClassLoader;
