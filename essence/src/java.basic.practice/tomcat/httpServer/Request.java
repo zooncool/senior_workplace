@@ -1,4 +1,4 @@
-package src.java.basic.practice.web;
+package src.java.basic.practice.tomcat.httpServer;
 
 import java.io.IOException;
 import java.io.InputStream;
