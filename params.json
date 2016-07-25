@@ -1,0 +1,6 @@
+{
+  "name": "java高级开发",
+  "tagline": "tomcat本质初窥",
+  "body": "tomcat作为开源的热门web容器，用起来简单便捷，但是对其中原理缺不知一二，废话不说，先上个案例，模拟tomcat接受web端的网络请求，处理完返回页面结果。\r\n服务端使用一个的HttpServer类，这是一个普通的Java类，通过里面的main（）方法来启动程序，充当服务端。\r\n public static void main(String[] args) {\r\n    HttpServer server = new HttpServer();\r\n    server.await();\r\n  }\r\n\r\nwait方法接受一个来自客户端的网络请求。\r\nsocket = serverSocket.accept();\r\n然后对网络请求的数据进行封装\r\ninput = socket.getInputStream();\r\noutput = socket.getOutputStream();\r\n\r\nresponse里面的响应方法sendStaticResource（）\r\n该方法里面的OutputStream对象output调用了write（）输出字节流\r\nString errorMessage = \"HTTP/1.1 404 File Not Found\\r\\n\" +\r\n          \"Content-Type: text/html\\r\\n\" +\r\n          \"Content-Length: 23\\r\\n\" +\r\n          \"\\r\\n\" +\r\n          \"<h1>File Not Found</h1>\";\r\n        output.write(errorMessage.getBytes());\r\n\r\n这就是一个简单的tomcat模拟服务器\r\n\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
