@@ -66,27 +66,6 @@ public class Request implements ServletRequest {
     return null;
   }
 
-  @Override
-  public int getRemotePort() {
-    return 0;
-  }
-
-  @Override
-  public String getLocalName() {
-    return null;
-  }
-
-  @Override
-  public String getLocalAddr() {
-    return null;
-  }
-
-  @Override
-  public int getLocalPort() {
-    return 0;
-  }
-
-
   public RequestDispatcher getRequestDispatcher(String path) {
     return null;
   }

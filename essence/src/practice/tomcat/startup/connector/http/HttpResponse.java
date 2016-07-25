@@ -471,11 +471,6 @@ public class HttpResponse implements HttpServletResponse {
     return writer;
   }
 
-  @Override
-  public void setCharacterEncoding(String s) {
-
-  }
-
   /**
    * Has the output of this response already been committed?
    */
